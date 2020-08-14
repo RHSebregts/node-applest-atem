@@ -313,7 +313,14 @@ class ATEM
           afv: if buffer[4] == 1 then true else false
           gain: @_parseNumber(buffer[0..1])/AUDIO_GAIN_RATE
           rawGain: @_parseNumber(buffer[0..1])
-
+    when 'Time' # TimeCode
+          buffer.slice()
+          return this.state.video.timecode = {
+            hours : buffer[0],
+            minutes : buffer[1],
+            seconds : buffer [2],
+            frames : buffer [3]
+          }
       when 'AMLv' # Audio Monitor Level
         numberOfChannels = @_parseNumber(buffer[0..1])
         channelMappings = []
